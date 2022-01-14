@@ -11,12 +11,12 @@ const accounts = {
     "TOEKN": "USERNAME",
 };
 
-const DiscordFormClassName = "authBoxExpanded-2jqaBe authBox-hW6HRx theme-dark"
+const discordClassName = "authBoxExpanded-AN2aH1 authBox-1HR6Ha theme-dark";
 
 
 function CheckURL(timeout) {
     if (window.location.href.indexOf("https://discord.com/login") > -1) {
-        if (document.getElementsByClassName(DiscordFormClassName)[0] !== undefined) {
+        if (document.getElementsByClassName(discordClassName)[0] !== undefined) {
             LoadAccounts();
             return;
         }
@@ -47,7 +47,7 @@ function LoadAccounts() {
     var css = new String();
 
     css += ".showButton {";
-    css += "    background-color: #7289DA;";
+    css += "    background-color: var(--brand-experiment);";
     css += "    width:32px;";
     css += "    border: none;";
     css += "    color: #FFF;";
@@ -70,7 +70,7 @@ function LoadAccounts() {
     css += "}";
 
     css += ".accounts {"
-    css += "    background-color: #7289DA;";
+    css += "    background-color: var(--brand-experiment);";
     css += "    height: 44px; width: auto;";
     css += "    border: none; color: #FFF;";
     css += "    padding: 0px; text-align: center;";
@@ -106,7 +106,7 @@ function LoadAccounts() {
     css += "}";
 
     css += ".login {"
-    css += "    background-color: #7289DA;";
+    css += "    background-color: var(--brand-experiment);";
     css += "    height: 43px; width: 112px;";
     css += "    border: none; color: #FFF;";
     css += "    text-align: center;";
@@ -126,7 +126,7 @@ function LoadAccounts() {
     }
 
     document.getElementsByTagName("head")[0].append(style);
-    const form = document.getElementsByClassName(DiscordFormClassName)[0];
+    const form = document.getElementsByClassName(discordClassName)[0];
 
     const showButton = document.createElement("button");
     showButton.innerText = "...";
@@ -172,11 +172,11 @@ function LoadAccounts() {
     loginButton.className = "login";
     loginButton.innerText = "Login";
     loginButton.addEventListener("click", () => {
-        var token = document.getElementsByClassName("tokenInput")[0].value
+        var token = document.getElementsByClassName("tokenInput")[0].value;
         if (token != "") { Login(token) }
     });
-    container.append(loginButton);
 
+    container.append(loginButton);
     form.append(container);
 }
 
