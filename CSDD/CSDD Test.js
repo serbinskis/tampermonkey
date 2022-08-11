@@ -14,7 +14,8 @@
     if ($("#52")[0]) { return; }
     if (!$(".text")[0]) { return; }
 
-    var content = b64DecodeUnicode(JSON.parse((await LoadGithub("https://api.github.com/repos/WobbyChip/Tampermonkey/git/blobs/48ca91b77d0752f40a12468b469c71e9efbbe494"))).content);
+    var url = "https://api.github.com/repos/WobbyChip/Tampermonkey/git/blobs/48ca91b77d0752f40a12468b469c71e9efbbe494";
+    var content = b64DecodeUnicode(JSON.parse((await LoadGithub(url))).content);
     var category = JSON.parse(content.trim().replaceAll("\\\\", "\\"));
 
     for (const [key, value] of Object.entries(category)) {
