@@ -6,15 +6,25 @@
 // @author       WobbyChip
 // @match        https://csnt2.csdd.lv/*
 // @require      http://pajhome.org.uk/crypt/md5/2.2/md5-min.js
+// @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=csdd.lv
-// @grant        none
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
+async function get(url) {
+    return await new Promise(resolve => {
+        GM_xmlhttpRequest ({ method: "GET", url: url, onload: resolve });
+    });
+}
+
 (async function() {
+    if ($(".ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close")[0]) {
+        $(".ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close")[0].click();
+    }
+
     if ($("#52")[0]) {
-        var url = "https://api.github.com/repos/WobbyChip/Tampermonkey/git/blobs/48ca91b77d0752f40a12468b469c71e9efbbe494";
-        var content = b64DecodeUnicode(JSON.parse((await LoadGithub(url))).content);
-        var category = JSON.parse(content.trim().replaceAll("\\\\", "\\"));
+        var url = "https://raw.githubusercontent.com/WobbyChip/Tampermonkey/master/CSDD/B%20Category.txt";
+        var category = JSON.parse((await get(url)).responseText.replaceAll("\\\\", "\\"));
 
         for (const [key, value] of Object.entries(category)) {
             localStorage.setItem(key, value);
@@ -24,23 +34,6 @@
     }
 
     if (!$(".text")[0]) { return; }
-
-    function b64DecodeUnicode(str) {
-        return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-        }).join(''))
-    }
-
-    async function LoadGithub(url) {
-        return await new Promise(resolve => {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url);
-            xhr.onload = function() {
-                resolve(xhr.response);
-            };
-            xhr.send();
-        });
-    }
 
     function addButton(text, id, callback) {
         var input = document.createElement("input");
