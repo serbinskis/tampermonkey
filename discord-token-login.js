@@ -12,21 +12,39 @@ const accounts = {
 };
 
 const discordClassName = "authBoxExpanded-AN2aH1 authBox-1HR6Ha theme-dark";
+const discordSettingsClassName = "flex-2S1XBF flex-3BkGQD horizontal-112GEH horizontal-1Piu5- flex-3BkGQD directionRow-2Iu2A9 justifyStart-2Mwniq alignStretch-Uwowzr noWrap-hBpHBz";
+const discordLeaveSvg = "M18 2H7C5.897 2 5 2.898 5 4V11H12.59L10.293 8.708L11.706 7.292L16.414 11.991L11.708 16.706L10.292 15.294L12.582 13H5V20C5 21.103 5.897 22 7 22H18C19.103 22 20 21.103 20 20V4C20 2.898 19.103 2 18 2Z";
+
+var interval1 = setInterval(() => {
+    if (window.location.href.indexOf("https://discord.com/login") < 0) { return; }
+    if (!document.getElementsByClassName(discordClassName)[0]) { return; }
+
+    loadAccounts();
+    clearInterval(interval1);
+}, 100);
+
+var interval2 = setInterval(() => {
+    if (!document.getElementsByClassName(discordSettingsClassName)[0]) { return; }
+
+    loadLogout();
+    clearInterval(interval2);
+}, 100);
 
 
-function CheckURL(timeout) {
-    if (window.location.href.indexOf("https://discord.com/login") > -1) {
-        if (document.getElementsByClassName(discordClassName)[0] !== undefined) {
-            LoadAccounts();
-            return;
-        }
-    }
+function logout() {
+    setInterval(() => {
+        document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = "";
+        document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.tokens = "";
+        document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.MultiAccountStore = "";
+    }, 50);
 
-    setTimeout(CheckURL, timeout, timeout);
+    setTimeout(() => {
+        location = "https://discord.com/login";
+    }, 500);
 }
 
 
-function Login(token) {
+function login(token) {
     setInterval(() => {
         document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = `"${token}"`
     }, 50);
@@ -37,7 +55,7 @@ function Login(token) {
 }
 
 
-function LoadAccounts() {
+function loadAccounts() {
     if (document.getElementsByClassName("showButton")[0] !== undefined) {
         return;
     }
@@ -146,7 +164,7 @@ function LoadAccounts() {
         button.className = "accounts";
         button.innerText = name;
         button.addEventListener("mouseup", (event) => {
-            if (event.button == 0) {Login(token);}
+            if (event.button == 0) { login(token); }
             if (event.button == 2) {
                 const copy = document.createElement("textArea");
                 copy.value = token;
@@ -173,15 +191,19 @@ function LoadAccounts() {
     loginButton.innerText = "Login";
     loginButton.addEventListener("click", () => {
         var token = document.getElementsByClassName("tokenInput")[0].value;
-        if (token != "") { Login(token) }
+        if (token != "") { login(token); }
     });
 
     container.append(loginButton);
     form.append(container);
 }
 
-window.onpopstate = function(event) {
-    LoadAccounts();
-};
+function loadLogout() {
+    var clone = document.getElementsByClassName(discordSettingsClassName)[0].lastChild.cloneNode(true);
+    clone.style = "left: -100%;"
+    clone.onclick = logout;
+    clone.children[0].children[0].children[0].setAttribute("d", discordLeaveSvg);
+    document.getElementsByClassName(discordSettingsClassName)[0].appendChild(clone);
+}
 
-CheckURL(100);
+window.onpopstate = (event) => { loadAccounts(); }
