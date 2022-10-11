@@ -159,7 +159,7 @@ function loadAccounts() {
     var container = document.createElement("div");
     container.style = "display: none";
 
-    for(const [token, name] of Object.entries(accounts)) {
+    for (const [token, name] of Object.entries(accounts)) {
         var button = document.createElement("button");
         button.className = "accounts";
         button.innerText = name;
