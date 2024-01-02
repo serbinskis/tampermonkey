@@ -16,14 +16,11 @@
 async function loadCategory(cat, url) {
     var category = JSON.parse((await (await fetch(url)).text()).replaceAll("\\\\", "\\"));
     sessionStorage.setItem(`category_${cat}`, JSON.stringify(category));
-
-    for (const [key, value] of Object.entries(category)) {
-        localStorage.setItem(key, value);
-    }
+    for (const [key, value] of Object.entries(category)) { localStorage.setItem(key, value); }
 }
 
 async function loadCategories() {
-    await loadCategory("b", "https://raw.githubusercontent.com/WobbyChip/Tampermonkey/master/CSDD/B%20Category.txt");
+    await loadCategory("b", "https://raw.githubusercontent.com/WobbyChip/Tampermonkey/master/CSDD/B%20Category.json");
 }
 
 function addButton(text, id, callback) {
@@ -83,8 +80,8 @@ function prepareQuestion(question) {
     }
 }
 
-async function startCategoryTest(cat, imagesFirst) {
-    if (!sessionStorage[`category_${cat}`]) { return; }
+async function startCategoryTest(cat, imagesFirst, bContinue) {
+    if (!sessionStorage[`category_${cat}`]) { return alert('Failed to load data from session storage.'); }
     window.addTime = () => {};
     window.secondsTimeSpanToHMS = () => window.secondsTimeSpanToHMS_new(0);
 
@@ -99,19 +96,23 @@ async function startCategoryTest(cat, imagesFirst) {
     }
 
     $('#header div.csn-time span').html(window.secondsTimeSpanToHMS_new(0));
-    $('#header div.csn-time').attr('val', 2);
+    $('#header div.csn-time').attr('val', bContinue ? localStorage[`time_${cat}`] : 2);
     //$('#header div.csn-time span').html('∞');
 
     var timer = setInterval(() => {
 		var ttm = parseInt($('#header div.csn-time').attr('val'));
 		$('#header div.csn-time span').html(window.secondsTimeSpanToHMS_new(ttm));
 		$('#header div.csn-time').attr('val', ttm+1);
+        localStorage[`time_${cat}`] = ttm+1;
     }, 1000);
 
     var category = JSON.parse(sessionStorage.getItem(`category_${cat}`));
     var questions = Object.entries(category).sort(() => 0.5 - Math.random());
 
-    var index = -1;
+    if (bContinue) { questions = JSON.parse(localStorage[`questions_${cat}`]); }
+    if (!bContinue) { localStorage[`questions_${cat}`] = JSON.stringify(questions); }
+
+    var index = bContinue ? parseInt(localStorage[`index_${cat}`])-2 : -1;
     var cur_question = null;
 
     $(".csdd_test").remove();
@@ -129,6 +130,7 @@ async function startCategoryTest(cat, imagesFirst) {
     addButton("Izlaist", "izlaist", () => {
         if (index+1 >= questions.length) { return clearInterval(timer); }
         cur_question = JSON.parse(questions[index+++1][1]);
+        localStorage.setItem(`index_${cat}`, index+1);
         document.querySelector('.csn-question').childNodes[1].textContent = ` ${index+1}/${questions.length}`;
         prepareQuestion(cur_question);
     });
@@ -136,6 +138,7 @@ async function startCategoryTest(cat, imagesFirst) {
     addButton("Atpakaļ", "atpakal", () => {
         if (index-1 < 0) { return; }
         cur_question = JSON.parse(questions[index---1][1]);
+        localStorage.setItem(`index_${cat}`, index+1);
         document.querySelector('.csn-question').childNodes[1].textContent = ` ${index+1}/${questions.length}`;
         prepareQuestion(cur_question);
     });
@@ -179,7 +182,8 @@ async function startCategoryTest(cat, imagesFirst) {
         }
 
         if (isFirst && isTest) {
-            addButton("SĀKT MEGA TESTU", "category-test", () => startCategoryTest('b', true));
+            addButton("SĀKT MEGA TESTU", "category-test", () => startCategoryTest('b', true, false));
+            if (localStorage.index_b) { addButton("TURPINĀT MEGA TESTU", "category-test", () => startCategoryTest('b', true, true)); }
         }
 
         question = loadQuestion(question);
