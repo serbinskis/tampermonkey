@@ -177,7 +177,7 @@ async function startCategoryTest(cat, imagesFirst, bContinue) {
         if (isStart && !isTest) {
             $(".block-label[for='atbilde-2264']")[0]?.click();
             $(".block-label[for='atbilde-2272']")[0]?.click();
-            $(".block-label[for='atbilde-37322']")[0]?.click();
+            $(".block-label[for='atbilde-51986']")[0]?.click();
             $(".button[type='submit']")[0].click();
         }
 
