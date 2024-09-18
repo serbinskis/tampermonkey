@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Collect and compare answers
-// @author       WobbyChip
+// @author       Serbinskis
 // @match        https://csnt2.csdd.lv/*
 // @require      http://pajhome.org.uk/crypt/md5/2.2/md5-min.js
 // @require      http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
