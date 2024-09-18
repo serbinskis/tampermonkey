@@ -3,7 +3,7 @@
 // @namespace    WobbyChip
 // @version      0.1
 // @description  Autologin in e-klase.lv
-// @author       WobbyChip
+// @author       Serbinskis
 // @include      https://*e-klase.lv/*
 // @grant        none
 // ==/UserScript==
