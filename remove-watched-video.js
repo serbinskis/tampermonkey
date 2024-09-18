@@ -3,7 +3,7 @@
 // @namespace    WobbyChip
 // @version      0.1
 // @description  Remove watched video
-// @author       WobbyChip
+// @author       Serbinskis
 // @include      https://www.youtube.com/
 // @grant        none
 // ==/UserScript==
