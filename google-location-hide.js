@@ -3,7 +3,7 @@
 // @namespace    WobbyChip
 // @version      0.1
 // @description  Hide location when searching in google chrome
-// @author       WobbyChip
+// @author       Serbinskis
 // @include      http*://*google.*/search*
 // @grant        none
 // ==/UserScript==
