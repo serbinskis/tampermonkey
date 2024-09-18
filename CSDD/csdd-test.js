@@ -20,7 +20,7 @@ async function loadCategory(cat, url) {
 }
 
 async function loadCategories() {
-    await loadCategory("b", "https://raw.githubusercontent.com/WobbyChip/Tampermonkey/master/CSDD/B%20Category.json");
+    await loadCategory("b", "https://raw.githubusercontent.com/serbinskis/tampermonkey/refs/heads/master/CSDD/categories/b_category.json");
 }
 
 function addButton(text, id, callback) {
