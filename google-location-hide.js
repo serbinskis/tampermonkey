@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Google Location Hide
-// @namespace    WobbyChip
+// @namespace    Serbix
 // @version      0.1
 // @description  Hide location when searching in google chrome
 // @author       Serbinskis
