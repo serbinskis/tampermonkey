@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  Skip online lessons in Ensteins autoschool
-// @author       Serbix
+// @author       Serbinskis
 // @match        https://student.einsteins.lv/e-learning/1/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=einsteins.lv
 // @run-at       document-start
