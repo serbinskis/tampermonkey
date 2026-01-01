@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         YouTube - Remove watched video
-// @namespace    WobbyChip
+// @namespace    Serbinskis
 // @version      0.1
 // @description  Remove watched video
 // @author       Serbinskis
