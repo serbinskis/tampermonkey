@@ -2,7 +2,7 @@
 // @name         Discord Token Login
 // @version      1.0
 // @description  Discord Token Login
-// @author       CoSeR & Wonfy & Serbix
+// @author       CoSeR & Wonfy & Serbinskis
 // @match        *://discord.com/
 // @include      *://discord.com/*
 // ==/UserScript==
